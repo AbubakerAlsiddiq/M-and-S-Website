@@ -1,1 +1,1 @@
-This is going to be the website for a small business that wants to increse their prescence online and in their community. 
+The goal is to create a website for a grocery store that allows users to view the inventory within the store, its price, and a photo. This is going to be the website for a small business that wants to increse their prescence online and in their community. 
