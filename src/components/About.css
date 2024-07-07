@@ -1,0 +1,17 @@
+.AboutImg {
+    margin: 0 auto;
+    display: block;
+}
+
+.caption {
+    text-align: center;
+    font-weight: bold;
+    color: green;
+}
+
+.par {
+    color: rgba(136, 78, 25, 1);
+    font-weight: bold;
+    text-align: center;
+}
+

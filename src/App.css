@@ -1,0 +1,39 @@
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+.loading-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white; 
+  }
+
+
+  .spinning-image {
+    width: 50vw; 
+    height: auto;
+    animation: spin .6s linear infinite; 
+  }
+
+  .navbar-brand img {
+    height: 120px;
+    width: auto; 
+    vertical-align: middle; 
+  }
+
+ .content {
+  margin-top: 60px;
+}

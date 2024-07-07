@@ -1,0 +1,50 @@
+.dropdown-menu {
+  columns: 3;
+}
+  
+.dropdown-item {
+  width: auto;
+  float: left;
+  text-align: center;
+}
+  
+.dropdown-item:hover {
+  background-color: #f1f1f1;
+}
+
+.NavbarWelcome {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-family: serif;
+  font-weight: bold;
+  font-size: large;
+  color: green;
+}
+
+.social-media-links {
+  margin-right: 10px;
+}
+
+.social-media-links:last-child {
+  margin-right: 0;
+}
+
+.navlink {
+  color: green !important;
+}
+
+.green-link {
+  color: green !important;
+  font-weight: bold !important;
+}
+
+.green-link a{
+  color: green !important;
+}
+
+.container-fluid {
+  background-color: white !important;
+}
