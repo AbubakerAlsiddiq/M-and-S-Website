@@ -5,47 +5,23 @@ h1 {
 }
 .carousel-inner {
     height: 100%;
-}
+    width: 80vw;
+}   
+
 .c-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 44vh;
+    height: 50vh;
 }
 
 .c-img {
     max-width: 100%;
     height: 100%;
+    background-repeat: repeat-x;
 }
-
-.EandDContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    height: 50vh;
-
-  }
 
 .Essentials-Container {
-    width: 50%;
+    width: 80vw;
     height: 100%;
-    border: 0;
-}
-
-.map-container iframe {
-    width: 100%;
-    height: 100%;
-}
-  
-.Deli-Container {
-    width: 50%;
-    height: 100%;
-    padding: 20px;
-}
-
-.carousel-caption h5 {
-    font-size: 3vw;
+    margin: 0 auto;
 }
   
 
