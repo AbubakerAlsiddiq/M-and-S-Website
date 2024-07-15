@@ -1,46 +1,63 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import LoadingScreen from "../components/LoadingScreen";
 import "./Inventory.css";
 
 interface Item {
-  [key: string]: number;
+  key: string;
+  price: number;
+  category: string;
 }
 
 interface CategoryItems {
-  [key: string]: Item;
+  [key: string]: Item[];
 }
-
-const API_URL =  "http://localhost:8080/inventory";
 
 const Inventory: React.FC = () => {
   const [inventory, setInventory] = useState<CategoryItems>({});
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 600);
+  }, []);
+
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchInventory = async () => {
       try {
-        const response = await fetch(`${API_URL}`);
+        const response = await fetch("http://localhost:8080/api/inventory");
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        const data: CategoryItems = await response.json();
-        setInventory(data);
-        setIsLoading(false);
+        const data: { [key: string]: { [key: string]: number } } =
+          await response.json();
+
+        const transformedData: CategoryItems = Object.entries(data).reduce(
+          (acc, [category, items]) => {
+            acc[category] = Object.entries(items).map(([key, price]) => ({
+              key,
+              price,
+              category,
+            }));
+            return acc;
+          },
+          {} as CategoryItems
+        );
+
+        setInventory(transformedData);
       } catch (error) {
         console.error("Error fetching inventory:", error);
         setError("Failed to load inventory. Please try again later.");
-        setIsLoading(false);
       }
     };
 
     fetchInventory();
   }, []);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -51,23 +68,27 @@ const Inventory: React.FC = () => {
   }
 
   return (
-    <>
-    <div className="inventory-page-container">
-      <h1>Inventory</h1>
-      <div className="inventory-container">
-        {Object.entries(inventory).map(([category, items]) => (
-          <div key={category} className="category" id={`category-${category}`}>
-            <h2>{category}</h2>
-            {Object.entries(items).map(([item, price]) => (
-              <div key={item} className="item">
-                {item}: ${price.toFixed(2)}
-              </div>
-            ))}
+    <div>
+      {isLoading ? (
+        <LoadingScreen />
+      ) : (
+        <>
+          <div className="inventory-page-container">
+            <h1>Inventory</h1>
+            <div className="inventory-container">
+              {Object.entries(inventory).map(([category, items]) => (
+                <div key={category} className="category">
+                  <Link to={`/category/${encodeURIComponent(category)}`}>
+                    <h2>{category}</h2>
+                  </Link>
+                  <p>{items.length} items</p>
+                </div>
+              ))}
+            </div>
           </div>
-        ))}
-      </div>
-      </div>
-    </>
+        </>
+      )}
+    </div>
   );
 };
 
