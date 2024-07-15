@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import LoadingScreen from "./components/LoadingScreen";
 import "./App.css";
 import Inventory from "./components/Inventory";
+import Category from "./components/Category";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,8 +26,9 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/components/About" element={<About />}></Route>
-            <Route path="/components/Inventory" element={<Inventory />}></Route>
+            <Route path="/about" element={<About />} />
+            <Route path="/inventory" element={<Inventory />} />
+            <Route path="/category/:categoryName" element={<Category />} />
           </Routes>
         </BrowserRouter>
       )}
@@ -35,3 +37,4 @@ function App() {
 }
 
 export default App;
+
