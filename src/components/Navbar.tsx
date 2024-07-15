@@ -1,10 +1,14 @@
 import React from "react";
+import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import Logo from "../assets/M&S New Logo.jpeg";
 import Instagram from "../assets/Instagram-Icon.png";
 import Facebook from "../assets/facebook-icon.png";
-import './Navbar.css';
-import SearchBar from "./SearchBar";
+import "./Navbar.css";
+import SearchBar from "./SearchBars";
+import About from "./About";
+import Inventory from "./Inventory";
 
 const Navbar = () => {
   const categories = [
@@ -41,6 +45,15 @@ const Navbar = () => {
     "Yogurt/Yogurt Drinks",
     "Wheat/Grain",
   ];
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 600);
+  }, []);
+
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -80,42 +93,16 @@ const Navbar = () => {
                 </a>
               </li>
               <li className="nav-item">
-                <a
-                  className="nav-link active green-link"
-                  aria-current="page"
-                  href="./components/about"
-                >
-                  About us
+                <a className="nav-link active green-link" aria-current="page">
+                  <NavLink to="/about">About us</NavLink>
                 </a>
               </li>
-              <li className="nav-item dropdown green-link">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Inventory
+              <li className="nav-item">
+                <a className="nav-link active green-link" aria-current="page">
+                  <NavLink to="/Inventory">Inventory</NavLink>
                 </a>
-                <ul className="dropdown-menu">
-                  {categories.map((category) => (
-                    <li key={category}>
-                      <a
-                        className="dropdown-item"
-                        href={`/components/Inventory#category-${category}`}
-                      >
-                        {category}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-              <li className="NavbarWelcome">
-                Welcome to M&S Organics!, A.K.A Delmarva Meditteranean Market
               </li>
             </ul>
-            < SearchBar />
           </div>
         </div>
       </nav>
