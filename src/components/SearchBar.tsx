@@ -1,65 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { FaSearch } from "react-icons/fa";
 
-interface Item {
-  [key: string]: number;
-}
+function SearchBar() {
+  const [input, setInput] = useState<string[]>([]);
 
-interface CategoryItems {
-  [key: string]: Item;
-}
+  const fetchSuggestions = async (input: string) => {
+    try {
+      const response = await fetch("http://localhost:8000/api/search");
+      const data = await response.json();
 
-const API_URL = "http://127.0.0.1:5000";
-
-const SearchBar = () => {
-  const [searchInput, setSearchInput] = useState("");
-  const [suggestedItems, setSuggestedItems] = useState<Item[]>([]);
-
-  useEffect(() => {
-    const fetchInventory = async () => {
-      if (searchInput === "") {
-        setSuggestedItems([]);
-        return;
-      }
-      const response = await fetch(`${API_URL}/inventory`);
-      const data: CategoryItems = await response.json();
-      const items = Object.values(data).flat();
-      const filteredItems = items.filter((item) => {
-        const itemName = Object.keys(item)[0];
-        return itemName.includes(searchInput);
+      const filteredResults = data.filter((item: string) => {
+        return item.toLowerCase().includes(input.toLowerCase());
       });
-      setSuggestedItems(filteredItems);
-    };
-    fetchInventory();
-  }, [searchInput]);
 
-  const handleSearchInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const inputValue = event.target.value;
-    setSearchInput(inputValue);
+      console.log(filteredResults);
+      // Update the state with the filtered results
+      setInput(filteredResults);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    setInput([inputValue]);
+    fetchSuggestions(inputValue);
   };
 
   return (
-    <form className="d-flex" role="search">
+    <div className="input-wrapper">
+      <FaSearch id="search-icon" />
       <input
-        className="form-control me-2"
-        type="search"
-        placeholder="Search our Inventory!"
-        aria-label="Search"
-        value={searchInput}
-        onChange={handleSearchInputChange}
+        placeholder="Search Our Inventory!"
+        value={input.join(", ")} // Display the filtered results as a comma-separated list
+        onChange={handleChange}
       />
-      <button className="btn btn-outline-success" type="submit">
-        Search
-      </button>
-      <ul>
-        {suggestedItems.map((item) => {
-          const itemName = Object.keys(item)[0];
-          return <li key={itemName}>{itemName}</li>;
-        })}
-      </ul>
-    </form>
+    </div>
   );
-};
+}
 
 export default SearchBar;
