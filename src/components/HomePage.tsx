@@ -8,14 +8,11 @@ export function HomePage() {
   return (
     <>
       <div className="Main">
+        <div className="subheader bg-success text-white py-2">
+          <h4>Welcome to M&S Organics - Delmarva Mediterranean Market!</h4>
+        </div>
         <Essentials />
-        <a
-          href="/components/Inventory"
-          type="button"
-          className="btn btn-lg InventoryBtn"
-        >
-          Check Out our Inventory!!!!
-        </a>
+        <div className="space" />
         <GoogleMaps />
       </div>
     </>
